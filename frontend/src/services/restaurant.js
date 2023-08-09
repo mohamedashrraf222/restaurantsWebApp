@@ -20,6 +20,7 @@ class RestaurantDataService {
   updateReview(data) {
     return http.put(`/review`, data);
   }
+
   //
   // I think we will edit this function to pass the user Id also not the only review id
   deleteReview(reviewId, userId) {

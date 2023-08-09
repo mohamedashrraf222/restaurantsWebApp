@@ -3,11 +3,17 @@ import RestaurantDataService from "./../services/restaurant";
 import { Link } from "react-router-dom";
 
 function RestaurantsList(props) {
+  // defining some intial states
+  // the first state is the restaurants array
   const [restaurants, setRestaurants] = useState([]);
+  // this seconed state is the cuisines array
+  const [cuisines, setCuisines] = useState(["All Cuisines"]);
+
+  // those state are for the form and search values
   const [searchName, setSearchName] = useState("");
   const [searchZip, setSearchZip] = useState("");
   const [searchCuisine, setSearchCuisine] = useState("");
-  const [cuisines, setCuisines] = useState(["All Cuisines"]);
+  
 
   useEffect(() => {
     retrieveRestaurants();
@@ -29,6 +35,8 @@ function RestaurantsList(props) {
     setSearchCuisine(searchCuisine);
   };
 
+
+  // retrive restaurants function is used to get a list of all restaurants and update cuisine state
   const retrieveRestaurants = () => {
     RestaurantDataService.getAll()
       .then((res) => {
@@ -37,6 +45,7 @@ function RestaurantsList(props) {
       .catch((e) => console.log(e));
   };
 
+  // retrive cusines function is used to get a list of all cuisines and update cuisine state
   const retrieveCuisines = () => {
     RestaurantDataService.getCuisines()
       .then((res) => {
@@ -45,10 +54,13 @@ function RestaurantsList(props) {
       .catch((e) => console.log(e));
   };
 
+  // this refresh list is to invoke retrieveRestaurants function
   const refreshList = () => {
     retrieveRestaurants();
   };
 
+  // this find function is used to find the restuarants we want with dataservice we created in restaurants.js to contact with the server
+  // then it setState and retrive the new found restuarants
   const find = (query, by) => {
     RestaurantDataService.find(query, by)
       .then((response) => {

@@ -14,8 +14,8 @@ export default class RestaurantsCtrl {
     //
     // at the first we are defining our query
     const restaurantsPerPage = req.query.restaurantsPerPage
-      ? parseInt(req.query.restaurantsPerPage, 10)
-      : 20;
+    ? parseInt(req.query.restaurantsPerPage, 10)
+    : 20;
     const page = req.query.page ? parseInt(req.query.page, 10) : 0;
     //
     // this will be our filters object that will be passed to the DAO
@@ -27,15 +27,15 @@ export default class RestaurantsCtrl {
     } else if (req.query.name) {
       filters.name = req.query.name;
     }
-
+    
     //
     // getting the result data from the DAO of restaurants
     const { restaurantsList, totalNumRestaurants } =
-      await RestaurantsDAO.getRestaurants({
-        filters,
-        page,
-        restaurantsPerPage,
-      });
+    await RestaurantsDAO.getRestaurants({
+      filters,
+      page,
+      restaurantsPerPage,
+    });
 
     //
     // creating the response object
@@ -46,10 +46,10 @@ export default class RestaurantsCtrl {
       entries_per_page: restaurantsPerPage,
       total_result: totalNumRestaurants,
     };
-
+    
     res.json(response);
   }
-
+  
   static async apiGetRestaurantById(req, res, next) {
     // at this method we take the 'id' from the 'id' in params then we pass it to the api DAO to get the restaurant by the id
     try {

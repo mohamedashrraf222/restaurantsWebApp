@@ -2,14 +2,20 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 function Login(props) {
+
+  // defining navigate to use it to navigate to home page after login
   const navigate = useNavigate()
+
+  // this is the initialUserData state
   const initialUserState = {
     name: "",
     id: "",
   };
 
+  // defining state for the user
   const [user, setUser] = useState(initialUserState);
 
+  // handdle change for inputs
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setUser((prev) => {
@@ -17,6 +23,8 @@ function Login(props) {
     });
   };
 
+  // this function is created to setUser in App.jsx by using login function passed from the props
+  // then after setting the user it navigates to the home 
   const login = () => {
     props.login(user);
     navigate("/");
@@ -24,7 +32,8 @@ function Login(props) {
 
   return (
     <div className="submit-form">
-      <div>
+
+      <form>
         <div className="form-group">
           <label htmlFor="user">Username</label>
           <input
@@ -54,7 +63,7 @@ function Login(props) {
         <button onClick={login} className="btn btn-success">
           Login
         </button>
-      </div>
+      </form>
     </div>
   );
 }
