@@ -14,4 +14,5 @@ app.use("/api/v1/restaurants", restaurants);
 
 app.use(express.static('dist'));
 
+
 export default app;
