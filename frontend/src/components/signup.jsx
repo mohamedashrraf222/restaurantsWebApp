@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import RestaurantDataService from "../services/restaurant";
 
-function Login(props) {
-  const [alert, setAlert] = useState("")
+
+function SignUp(props) {
+  const [alert, setAlert] = useState("");
 
   // defining navigate to use it to navigate to home page after login
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   // this is the initialUserData state
   const initialUserState = {
@@ -26,27 +27,22 @@ function Login(props) {
   };
 
   // this function is created to setUser in App.jsx by using login function passed from the props
-  // then after setting the user it navigates to the home 
-  const login = (event) => {
-    event.preventDefault()
-    let myUser = null;
-    RestaurantDataService.login(user).then((res) => {
-      if(res.data == null ){
-        setAlert("please enter a valid user")
+  // then after setting the user it navigates to the home
+  const signup = (event) => {
+    event.preventDefault();
+    RestaurantDataService.signUp(user).then((res)=>{
+      if(res.data == 'new user is created'){
+        props.login(user)
+        navigate('/')
       }else{
-        myUser = {
-          name: res.data.username,
-          id: res.data.pass,
-        };
-      props.login(myUser);
-      navigate("/");
+        setAlert(res.data)
       }
-    });
+    })
+
   };
 
   return (
     <div className="submit-form">
-
       <form>
         <div className="form-group">
           <label htmlFor="user">Username</label>
@@ -60,7 +56,6 @@ function Login(props) {
             name="name"
           />
         </div>
-
         <div className="form-group">
           <label htmlFor="id">ID</label>
           <input
@@ -73,9 +68,8 @@ function Login(props) {
             name="id"
           />
         </div>
-
-        <button onClick={login} className="btn btn-success">
-          Login
+        <button onClick={signup} className="btn btn-success">
+          sign Up
         </button>
         {alert}
       </form>
@@ -83,4 +77,4 @@ function Login(props) {
   );
 }
 
-export default Login;
+export default SignUp;
